@@ -1,3 +1,7 @@
+
+          For Educational Purposes Only!!!!!!!!!!!For Educational Purposes Only!!!!!!!!!!!!For Educational Purposes Only!!!!!!!!!!!For Educational Purposes Only!!!!!!!!!!!!!!!!!!!For Educational Purposes Only!!!!!!!!!!!!!!!!
+
+
 FrackSec Code Analysis Tool
 FrackSec is an advanced code analysis tool designed to parse and analyze source code to identify complexity, potential vulnerabilities, and unusual patterns through topological data analysis (TDA) and machine learning techniques. This tool constructs graphs from code, calculates Betti numbers, estimates fractal dimensions, and performs anomaly detection.
 
