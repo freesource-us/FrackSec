@@ -1,3 +1,5 @@
+import sys
+
 import networkx as nx
 from gudhi import SimplexTree
 
@@ -179,6 +181,8 @@ def estimate_fractal_dimension(simplex_tree, max_dimension, steps=10):
     """
     filtration_range = np.linspace(0, max_dimension, steps)
     betti_numbers = [simplex_tree.betti_number(i) for i in range(steps)]
+
+    # Perform linear regression on the log-log plot of filtration levels and Betti numbers
     logs = np.log(np.array([filtration_range, betti_numbers]))
 
     # Handle cases where logs may result in -inf due to log(0)
@@ -688,6 +692,11 @@ if __name__ == "__main__":
 # ... (existing code) ...
 
 from cli import run_cli
+
+
+def run_web_server():
+    pass  # Placeholder for web server functionality
+
 
 def main():
     parser = argparse.ArgumentParser(description='FrackSec - Code Complexity Analysis Tool')

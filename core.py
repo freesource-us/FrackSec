@@ -31,3 +31,8 @@ def store_fractal_dimensions(graph, node_fractal_dimensions):
 
 def analyze_code(code, config):
     # ... (existing analyze_code implementation) ...
+    return {
+        'graph': graph,
+        'fractal_dimensions': fractal_dimensions,
+        'anomalies': ranked_anomalies
+    }
