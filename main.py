@@ -207,7 +207,7 @@ def estimate_fractal_dimension(simplex_tree, max_dimension, steps=10):
 
 
 # Example usage, assuming 'simplex_tree' is already populated from your previous TDA step
-fractal_dimension = estimate_fractal_dimension(simplex_tree, max_dimension=2)
+fractal_dimension = estimate_fractal_dimension(simplex_tree, max_dimension=2)  # Set the max dimension based on your data
 print("Estimated Fractal Dimension:", fractal_dimension)
 
 from sklearn.ensemble import IsolationForest

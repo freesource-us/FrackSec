@@ -36,3 +36,36 @@ def analyze_code(code, config):
         'fractal_dimensions': fractal_dimensions,
         'anomalies': ranked_anomalies
     }
+
+# core.py
+import traceback
+from logger import setup_logger
+
+logger = setup_logger('fracksec.log')
+
+# ... (rest of the core.py module) ...
+
+def analyze_code(code, config_path=None):
+    """
+    Analyze the provided code using the FrackSec analysis pipeline.
+
+    Args:
+        code (str): The source code to be analyzed.
+        config_path (str, optional): The path to the configuration file.
+
+    Returns:
+        dict: A dictionary containing the analysis results.
+    """
+    try:
+        config = load_config(config_path)
+
+        # ... (rest of the analyze_code function) ...
+
+        return analysis_results
+    except Exception as e:
+        logger.error(f"Error during code analysis: {e}")
+        logger.error(traceback.format_exc())
+        return {}
+
+# Update other functions with exception handling and logging
+# ...
