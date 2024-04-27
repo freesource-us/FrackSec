@@ -1,0 +1,9 @@
+networkx==3.3
+numpy==1.24.2
+matplotlib==3.7.1
+seaborn==0.12.2
+graphviz==0.20.1
+pygraphviz==1.12
+gudhi==3.5.0
+scikit-learn==1.2.2
+flask==2.3.2
