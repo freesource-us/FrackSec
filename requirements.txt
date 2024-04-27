@@ -4,6 +4,6 @@ matplotlib==3.7.1
 seaborn==0.12.2
 graphviz==0.20.1
 pygraphviz==1.12
-gudhi==3.5.0
+gudhi==3.9.0
 scikit-learn==1.2.2
 flask==2.3.2
