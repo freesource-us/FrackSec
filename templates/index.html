@@ -65,28 +65,100 @@
             text-align: left;
             white-space: pre-wrap;
         }
+        #visualDisplay {
+            width: 100%;
+            height: 200px;
+            background-color: #20232a;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .node {
+            width: 20px;
+            height: 20px;
+            background-color: #61dafb;
+            border-radius: 50%;
+            margin: 5px;
+            opacity: 0;
+            animation: fadeInOut 1s ease-in-out infinite;
+        }
+        @keyframes fadeInOut {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 1; }
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h2>FrackSec - Code Complexity Analysis</h2>
-        <form action="/" method="post">
+        <form id="analysisForm">
             <textarea id="code" name="code" rows="10" placeholder="Enter your code here..."></textarea>
             <button type="submit" class="fire-button">Analyze Code</button>
         </form>
-        <div class="results smoke-background">
+        <div id="visualDisplay"></div>
+        <div id="resultsContainer" class="results smoke-background">
             <h3>Analysis Results</h3>
-            {% if analysis_results %}
-                <h4>Graph:</h4>
-                <pre>{{ analysis_results.graph }}</pre>
-                <h4>Fractal Dimensions:</h4>
-                <pre>{{ analysis_results.fractal_dimensions }}</pre>
-                <h4>Anomalies:</h4>
-                <pre>{{ analysis_results.anomalies }}</pre>
-            {% else %}
+            <div id="analysisResults">
                 <p>No analysis results available.</p>
-            {% endif %}
+            </div>
         </div>
     </div>
+
+    <script>
+        document.getElementById('analysisForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            var code = document.getElementById('code').value;
+            var visualDisplay = document.getElementById('visualDisplay');
+            var resultsContainer = document.getElementById('resultsContainer');
+            var analysisResults = document.getElementById('analysisResults');
+
+            // Clear previous results and display
+            analysisResults.innerHTML = '<p>Analyzing code...</p>';
+            visualDisplay.innerHTML = '';
+
+            // Generate visual nodes
+            var nodeCount = 10;
+            for (var i = 0; i < nodeCount; i++) {
+                var node = document.createElement('div');
+                node.className = 'node';
+                node.style.animationDelay = (i * 0.1) + 's';
+                visualDisplay.appendChild(node);
+            }
+
+            // Send the code to the server for analysis
+            fetch('/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: 'code=' + encodeURIComponent(code)
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Clear the visual display
+                visualDisplay.innerHTML = '';
+
+                // Display the analysis results
+                var resultHTML = '';
+                if (data.graph && data.fractal_dimensions && data.anomalies) {
+                    resultHTML += '<h4>Graph:</h4><pre>' + JSON.stringify(data.graph, null, 2) + '</pre>';
+                    resultHTML += '<h4>Fractal Dimensions:</h4><pre>' + JSON.stringify(data.fractal_dimensions, null, 2) + '</pre>';
+                    resultHTML += '<h4>Anomalies:</h4><pre>' + JSON.stringify(data.anomalies, null, 2) + '</pre>';
+                } else {
+                    resultHTML = '<p>No analysis results available.</p>';
+                }
+                analysisResults.innerHTML = resultHTML;
+                resultsContainer.style.display = 'block';
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                analysisResults.innerHTML = '<p>An error occurred while analyzing the code.</p>';
+                resultsContainer.style.display = 'block';
+            });
+        });
+    </script>
 </body>
 </html>
