@@ -1,71 +1,64 @@
-# core.py
 import ast
 import networkx as nx
 import numpy as np
 from gudhi import SimplexTree
-
-# Existing code components
-class AdvancedCodeAnalyzer(ast.NodeVisitor):
-    pass  # ... (existing AdvancedCodeAnalyzer implementation) ...
-
-def prepare_graph_for_tda(graph):
-    pass  # ... (existing prepare_graph_for_tda implementation) ...
-
-def calculate_betti_numbers(simplex_tree):
-    pass  # ... (existing calculate_betti_numbers implementation) ...
-
-def estimate_fractal_dimension(simplex_tree, max_dimension, steps=10):
-    pass  # ... (existing estimate_fractal_dimension implementation) ...
-
 from sklearn.ensemble import IsolationForest
 from sklearn.preprocessing import StandardScaler
-
-class AnomalyDetection:
-    pass  # ... (existing AnomalyDetection implementation) ...
-
-class AnomalyMapper:
-    pass  # ... (existing AnomalyMapper implementation) ...
-
-def store_fractal_dimensions(graph, node_fractal_dimensions):
-    pass  # ... (existing store_fractal_dimensions implementation) ...
-
-def analyze_code(code, config):
-    # ... (existing analyze_code implementation) ...
-    return {
-        'graph': graph,
-        'fractal_dimensions': fractal_dimensions,
-        'anomalies': ranked_anomalies
-    }
-
-# core.py
 import traceback
 from logger import setup_logger
+import json
 
 logger = setup_logger('fracksec.log')
 
-# ... (rest of the core.py module) ...
+class AdvancedCodeAnalyzer(ast.NodeVisitor):
+    # ... (existing AdvancedCodeAnalyzer implementation) ...
 
-def analyze_code(code, config_path=None):
-    """
-    Analyze the provided code using the FrackSec analysis pipeline.
+def prepare_graph_for_tda(graph):
+    # ... (existing prepare_graph_for_tda implementation) ...
 
-    Args:
-        code (str): The source code to be analyzed.
-        config_path (str, optional): The path to the configuration file.
+def calculate_betti_numbers(simplex_tree, max_dimension):
+    # ... (existing calculate_betti_numbers implementation) ...
 
-    Returns:
-        dict: A dictionary containing the analysis results.
-    """
-    try:
-        config = load_config(config_path)
+def estimate_fractal_dimension(simplex_tree, max_dimension):
+    # ... (existing estimate_fractal_dimension implementation) ...
 
-        # ... (rest of the analyze_code function) ...
+class AnomalyDetection:
+    def __init__(self, contamination=0.1, n_estimators=100):
+        self.model = IsolationForest(contamination=contamination, n_estimators=n_estimators)
+        self.scaler = StandardScaler()
 
-        return analysis_results
-    except Exception as e:
-        logger.error(f"Error during code analysis: {e}")
-        logger.error(traceback.format_exc())
-        return {}
+    def fit(self, X):
+        X_scaled = self.scaler.fit_transform(X)
+        self.model.fit(X_scaled)
 
-# Update other functions with exception handling and logging
-# ...
+    def predict(self, X):
+        X_scaled = self.scaler.transform(X)
+        return self.model.predict(X_scaled)
+
+class AnomalyMapper:
+    def __init__(self, graph, anomaly_scores, severity_threshold=1.5, critical_keywords=None):
+        self.graph = graph
+        self.anomaly_scores = anomaly_scores
+        self.severity_threshold = severity_threshold
+        self.critical_keywords = critical_keywords or []
+
+    def map_anomalies(self):
+        anomaly_nodes = [node for node, score in self.anomaly_scores.items() if score > self.severity_threshold]
+        anomaly_subgraph = self.graph.subgraph(anomaly_nodes)
+        return anomaly_subgraph
+
+    def get_critical_anomalies(self):
+        critical_anomalies = []
+        for node in self.anomaly_scores:
+            if any(keyword in node for keyword in self.critical_keywords):
+                critical_anomalies.append(node)
+        return critical_anomalies
+
+def store_fractal_dimensions(graph, fractal_dimensions):
+    # ... (existing store_fractal_dimensions implementation) ...
+
+def load_config(config_path):
+    # ... (existing load_config implementation) ...
+
+def analyze_code(code, config_path):
+    # ... (existing analyze_code implementation) ...

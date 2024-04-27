@@ -1,0 +1,20 @@
+{
+  "analysis": {
+    "max_dimension": 2
+  },
+  "anomaly_detection": {
+    "contamination": 0.1,
+    "n_estimators": 100
+  },
+  "anomaly_mapping": {
+    "severity_threshold": 1.5,
+    "critical_keywords": [
+      "core",
+      "security"
+    ]
+  },
+  "logging": {
+    "level": "INFO",
+    "file": "fracksec.log"
+  }
+}
