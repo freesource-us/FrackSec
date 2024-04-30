@@ -7,3 +7,4 @@ pygraphviz==1.12
 gudhi==3.9.0
 scikit-learn==1.2.2
 flask==2.3.2
+ipython==8.24.0
