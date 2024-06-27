@@ -6,26 +6,34 @@
 ### FrackSec Code Analysis Tool
 ---------------------------
 
-FrackSec is an advanced code analysis tool designed to parse and analyze source code to identify complexity, potential vulnerabilities, and unusual patterns through topological data analysis (TDA) and machine learning techniques. This tool constructs graphs from code, calculates Betti numbers, estimates fractal dimensions, and performs anomaly detection.
+The Fracksec Analysis Tool is a comprehensive Python-based solution designed to analyze codebases for potential vulnerabilities and coding errors. This tool provides a detailed assessment of code complexity, evolution, interactions, data flows, and Pylint scores to calculate the probability of vulnerabilities and identify potential security risks.
 
 ### Features
 --------
-Code Parsing: Parses Python code to construct a directed graph of functions, variables, and their interactions.
+Clone and Analyze Repositories: Automatically clone a GitHub repository and analyze its Python files.
 
-Graph Analysis: Utilizes NetworkX to create and analyze directed graphs.
+Cyclomatic Complexity Calculation: Evaluate the complexity of the code to identify high-risk areas.
 
-Topological Data Analysis: Integrates with the Gudhi library to perform TDA and calculate Betti numbers.
+Code Evolution Analysis: Track the evolution of code by counting the number of commits affecting each file.
 
-Fractal Dimension Estimation: Estimates fractal dimensions based on TDA results to assess code complexity.
+Commit Message Analysis: Score commits based on the presence of security-related keywords.
 
-Anomaly Detection: Employs machine learning algorithms to detect deviations from normal complexity patterns.
+Code Interaction and Data Flow Analysis: Assess the interactions between functions and the flow of data within the code.
 
-Visualization: Offers visualization of graphs and complexity metrics to aid in understanding code structure and anomalies.
+Pylint Score Calculation: Evaluate code quality using Pylint and identify potential issues.
+
+Vulnerability Detection: Identify potential vulnerabilities based on known patterns and coding practices.
+
+Coding Error Identification: Detect syntax errors, logical errors, and potential runtime exceptions.
+
+Detailed Reporting: Generate CSV reports and detailed text reports summarizing the findings.
+
+Visualization: Plot the distribution of vulnerability probabilities to visualize the overall risk profile.
 
 
 ### Installation
 --------
-To install FrackSec, you will need Python 3.6 or later. Clone this repository and install the required dependencies (using a python virtual environment is recommended):
+To install the Fracksec Analysis Tool, clone this repository and install the required dependencies: (using a python virtual environment is recommended):
 
 ```bash
 git clone https://github.com/freesource-us/FrackSec.git
@@ -37,42 +45,55 @@ pip install -r requirements.txt
 
 ### Usage
 --------
-FrackSec can be run from the command line or integrated into a web application. Here are the basic steps to use it from the command line:
+To run the analysis on a specific repository, replace the placeholders in the script with your NVD API key and the repository URL, then execute the script:
 
-Basic Command Line Execution:
+python fracksec_analysis_tool.py
 
-```bash
-python main.py --file path_to_your_code.py
-```
 
-Web Interface
-If you prefer to use a web interface, start the Flask server:
 
-```bash
-python web.py
-```
-Then, navigate to http://localhost:5000 in your web browser.
-
-### Configuration
+### Output
 --------
-Modify config.json to adjust the severity thresholds, critical keywords, and baseline data for anomaly detection. For example:
 
-```json
-{
-  "severity_threshold": 1.5,
-  "critical_keywords": ["core", "security"],
-  "baseline_data": {
-    "functions": [1.5, 1.6, 1.7],
-    "classes": [2.1, 2.2]
-  }
-}
-```
 
+Output
+The tool generates several outputs:
+
+CSV File: A summary of the analysis results for each file.
+Histogram: A plot of the distribution of vulnerability probabilities.
+Detailed Report: A text file containing detailed analysis for each file, including potential vulnerabilities and coding errors.
+
+
+### Example Output
+--------
+
+Vulnerability and Code Quality Analysis Report
+============================================
+
+Total files analyzed: 347
+Average vulnerability probability: 1.53
+
+Top 10 Most Vulnerable Files:
+  cloned_repo/test/functional/p2p_segwit.py - Probability: 3.29
+  cloned_repo/test/functional/p2p_opportunistic_1p1c.py - Probability: 2.97
+  ...
+
+Detailed Analysis:
+File: cloned_repo/build_msvc/msvc-autogen.py
+Vulnerability Probability: 1.64
+Complexity: 17
+Evolution: 0
+Interactions: 12
+Data Flows: 25
+Pylint Score: 8.25
+...
+
+
+
+### Disclaimer
+FOR EDUCATIONAL AND RESEARCH PURPOSES ONLY
+
+This tool is intended solely for educational and research purposes. The authors are not responsible for any misuse or damage caused by the tool. Use it responsibly and only on codebases that you have permission to analyze.
 
 ### Contributing
 --------
-Contributions to FrackSec are welcome! Please consider the following steps:
-
-Fork the repository.
-Create a new branch for each feature or improvement.
-Submit a pull request with comprehensive description of changes.
+Contributions are welcome! Feel free to open an issue or submit a pull request with your improvements or bug fixes.
